@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+
+    environment {
+        // Define environment variables
+        PROJECT_NAME = 'my-project'
+        BRANCH_NAME = 'main'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout code from the Git repository
+                git branch: "${BRANCH_NAME}", url: 'https://github.com/yourusername/your-repo.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    // Example: run a build command (e.g., for a Node.js project)
+                    echo 'Building the project...'
+                    sh 'npm install'  // For Node.js projects
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                script {
+                    // Example: run tests (e.g., for a Node.js project)
+                    echo 'Running tests...'
+                    sh 'npm test'  // For Node.js projects
+                }
+            }
+        }
+
+        stage('Deploy') {
+            when {
+                branch 'main'  // Deploy
